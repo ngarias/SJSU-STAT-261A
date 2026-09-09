@@ -1,0 +1,55 @@
+---
+title: "Homework #2"
+author: "Noah Arias"
+format: typst
+---
+
+# Problem 1
+## Part (a)
+
+Let $S = AA^{\top}$. Thus:
+
+$S = AA^{\top} = \begin{bmatrix} 4 & 8 & 8 \\ 3 & 6 & -9\end{bmatrix} \cdot \begin{bmatrix} 4 & 3 \\ 8 & 6 \\ 8 & -9\end{bmatrix} = \begin{bmatrix} 144 & -12 \\ -12 & 126 \end{bmatrix}$
+
+(We briefly pause the calculation to note that $S$ this matrix is symmetric and non-singular.)
+
+To find the eigenvalues of $S$, we create and solve the characteristic equation:
+$$\det(S - \lambda I_2) = 0$$
+where $I_2$ is the $2 \times 2$ identity matrix. Performing the calculation, we get:
+
+$$
+\begin{aligned} \det(S - \lambda I_2) &= \det(\begin{bmatrix} 144 & -12 \\ -12 & 126 \end{bmatrix} - \lambda \cdot \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}) \\ &= \det(\begin{bmatrix} 144 - \lambda & -12 \\ -12 & 126 - \lambda \end{bmatrix}) \\ &= (144 - \lambda)(126 - \lambda) - 144 \\ &= 18,144 - 144\lambda - 126\lambda + \lambda^2 - 144 \\ &= \lambda^2 - 270\lambda + 18,000 \\ &= 0
+\end{aligned} $$
+Solving this quadratic equation with the quadratic formula yields the two eigenvalues, $\lambda_1$ and $\lambda_2$ being:
+
+$$\lambda_1 = 150, \lambda_2 = 120$$
+
+| $\lambda_1 = 150$ | $\lambda_2 = 120$ |
+| :----: | :----: |
+| $$\begin{aligned} (S - \lambda_1 I_2) \cdot \vec{v} &= 0 \\ \begin{bmatrix} 144 - 150 & -12 \\ -12 & 126 - 150 \end{bmatrix} &= \begin{bmatrix} -6 & -12 \\ -12 & -24 \end{bmatrix} \\ &\implies \begin{bmatrix} 1 & 2 \\ 0 & 0 \end{bmatrix}\\
+\end{aligned}$$ \ Thus $x_1 + 2x_2 = 0 \implies x_1 = -2x_2$. The eigenvector for $\lambda_1$ is (-2, 1). | $$\begin{aligned} (S - \lambda_2 I_2) \cdot \vec{v} &= 0 \\ \begin{bmatrix} 144 - 120 & -12 \\ -12 & 126 - 120 \end{bmatrix} &= \begin{bmatrix} 24 & -12 \\ -12 & 6 \end{bmatrix} \\ &\implies \begin{bmatrix} 2 & -1 \\ 0 & 0 \end{bmatrix}\\
+\end{aligned}$$ \ Thus $2x_1 - x_2 = 0 \implies x_2 = 2x_1$. The eigenvector for $\lambda_1$ is (1, 2).|
+## Part (b) WIP!
+
+Let $S = AA^{\top}$. Thus:
+
+$S = AA^{\top} = \begin{bmatrix} 4 & 8 & 8 \\ 3 & 6 & -9\end{bmatrix} \cdot \begin{bmatrix} 4 & 3 \\ 8 & 6 \\ 8 & -9\end{bmatrix} = \begin{bmatrix} 144 & -12 \\ -12 & 126 \end{bmatrix}$
+
+(We briefly pause the calculation to note that $S$ this matrix is symmetric and non-singular.)
+
+To find the eigenvalues of $S$, we create and solve the characteristic equation:
+$$\det(S - \lambda I_2) = 0$$
+where $I_2$ is the $2 \times 2$ identity matrix. Performing the calculation, we get:
+
+$$
+\begin{aligned} \det(S - \lambda I_2) &= \det(\begin{bmatrix} 144 & -12 \\ -12 & 126 \end{bmatrix} - \lambda \cdot \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}) \\ &= \det(\begin{bmatrix} 144 - \lambda & -12 \\ -12 & 126 - \lambda \end{bmatrix}) \\ &= (144 - \lambda)(126 - \lambda) - 144 \\ &= 18,144 - 144\lambda - 126\lambda + \lambda^2 - 144 \\ &= \lambda^2 - 270\lambda + 18,000 \\ &= 0
+\end{aligned} $$
+Solving this quadratic equation with the quadratic formula yields the two eigenvalues, $\lambda_1$ and $\lambda_2$ being:
+
+$$\lambda_1 = 150, \lambda_2 = 120$$
+
+| $\lambda_1 = 150$ | $\lambda_2 = 120$ |
+| :----: | :----: |
+| $$\begin{aligned} (S - \lambda_1 I_2) \cdot \vec{v} &= 0 \\ \begin{bmatrix} 144 - 150 & -12 \\ -12 & 126 - 150 \end{bmatrix} &= \begin{bmatrix} -6 & -12 \\ -12 & -24 \end{bmatrix} \\ &\implies \begin{bmatrix} 1 & 2 \\ 0 & 0 \end{bmatrix}\\
+\end{aligned}$$ \ Thus $x_1 + 2x_2 = 0 \implies x_1 = -2x_2$. The eigenvector for $\lambda_1$ is (-2, 1). | $$\begin{aligned} (S - \lambda_2 I_2) \cdot \vec{v} &= 0 \\ \begin{bmatrix} 144 - 120 & -12 \\ -12 & 126 - 120 \end{bmatrix} &= \begin{bmatrix} 24 & -12 \\ -12 & 6 \end{bmatrix} \\ &\implies \begin{bmatrix} 2 & -1 \\ 0 & 0 \end{bmatrix}\\
+\end{aligned}$$ \ Thus $2x_1 - x_2 = 0 \implies x_2 = 2x_1$. The eigenvector for $\lambda_1$ is (1, 2).|
