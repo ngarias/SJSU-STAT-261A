@@ -1,55 +1,103 @@
 ---
-title: "Homework #2"
+title: "Homework #2 - MATH 261A"
 author: "Noah Arias"
-format: typst
+format:
+    pdf:
+        include-in-header:
+        - text: |
+            \usepackage{amsmath}
+            \usepackage{tcolorbox}
 ---
 
-# Problem 1
-## Part (a)
+## Problem 1
+We assume that $X_1, X_2, \dots , X_n \sim N(\mu, \sigma^2)$ and are I.I.D.
 
-Let $S = AA^{\top}$. Thus:
+# Part (a)
+We know that $\bar{X}_n$ follows a Gaussian distribution, but we must determine the mean and variance paramters.
 
-$S = AA^{\top} = \begin{bmatrix} 4 & 8 & 8 \\ 3 & 6 & -9\end{bmatrix} \cdot \begin{bmatrix} 4 & 3 \\ 8 & 6 \\ 8 & -9\end{bmatrix} = \begin{bmatrix} 144 & -12 \\ -12 & 126 \end{bmatrix}$
-
-(We briefly pause the calculation to note that $S$ this matrix is symmetric and non-singular.)
-
-To find the eigenvalues of $S$, we create and solve the characteristic equation:
-$$\det(S - \lambda I_2) = 0$$
-where $I_2$ is the $2 \times 2$ identity matrix. Performing the calculation, we get:
+We do this by a straightforward expectation and variance calculation:
 
 $$
-\begin{aligned} \det(S - \lambda I_2) &= \det(\begin{bmatrix} 144 & -12 \\ -12 & 126 \end{bmatrix} - \lambda \cdot \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}) \\ &= \det(\begin{bmatrix} 144 - \lambda & -12 \\ -12 & 126 - \lambda \end{bmatrix}) \\ &= (144 - \lambda)(126 - \lambda) - 144 \\ &= 18,144 - 144\lambda - 126\lambda + \lambda^2 - 144 \\ &= \lambda^2 - 270\lambda + 18,000 \\ &= 0
-\end{aligned} $$
-Solving this quadratic equation with the quadratic formula yields the two eigenvalues, $\lambda_1$ and $\lambda_2$ being:
+\begin{aligned}
+E(\bar{X}_n) = E\Bigg(\frac{\sum_{i=1}^n X_i}{n}\Bigg) = \frac{1}{n}\sum_{i=1}^n E(X_i)
+\end{aligned}
+$$
 
-$$\lambda_1 = 150, \lambda_2 = 120$$
-
-| $\lambda_1 = 150$ | $\lambda_2 = 120$ |
-| :----: | :----: |
-| $$\begin{aligned} (S - \lambda_1 I_2) \cdot \vec{v} &= 0 \\ \begin{bmatrix} 144 - 150 & -12 \\ -12 & 126 - 150 \end{bmatrix} &= \begin{bmatrix} -6 & -12 \\ -12 & -24 \end{bmatrix} \\ &\implies \begin{bmatrix} 1 & 2 \\ 0 & 0 \end{bmatrix}\\
-\end{aligned}$$ \ Thus $x_1 + 2x_2 = 0 \implies x_1 = -2x_2$. The eigenvector for $\lambda_1$ is (-2, 1). | $$\begin{aligned} (S - \lambda_2 I_2) \cdot \vec{v} &= 0 \\ \begin{bmatrix} 144 - 120 & -12 \\ -12 & 126 - 120 \end{bmatrix} &= \begin{bmatrix} 24 & -12 \\ -12 & 6 \end{bmatrix} \\ &\implies \begin{bmatrix} 2 & -1 \\ 0 & 0 \end{bmatrix}\\
-\end{aligned}$$ \ Thus $2x_1 - x_2 = 0 \implies x_2 = 2x_1$. The eigenvector for $\lambda_1$ is (1, 2).|
-## Part (b) WIP!
-
-Let $S = AA^{\top}$. Thus:
-
-$S = AA^{\top} = \begin{bmatrix} 4 & 8 & 8 \\ 3 & 6 & -9\end{bmatrix} \cdot \begin{bmatrix} 4 & 3 \\ 8 & 6 \\ 8 & -9\end{bmatrix} = \begin{bmatrix} 144 & -12 \\ -12 & 126 \end{bmatrix}$
-
-(We briefly pause the calculation to note that $S$ this matrix is symmetric and non-singular.)
-
-To find the eigenvalues of $S$, we create and solve the characteristic equation:
-$$\det(S - \lambda I_2) = 0$$
-where $I_2$ is the $2 \times 2$ identity matrix. Performing the calculation, we get:
+Since each $X_i$ follows a $N(\mu, \sigma^2)$, it's mean is simply $\mu$. Therefore, we can rewrite the last sum in the above calculation as:
 
 $$
-\begin{aligned} \det(S - \lambda I_2) &= \det(\begin{bmatrix} 144 & -12 \\ -12 & 126 \end{bmatrix} - \lambda \cdot \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}) \\ &= \det(\begin{bmatrix} 144 - \lambda & -12 \\ -12 & 126 - \lambda \end{bmatrix}) \\ &= (144 - \lambda)(126 - \lambda) - 144 \\ &= 18,144 - 144\lambda - 126\lambda + \lambda^2 - 144 \\ &= \lambda^2 - 270\lambda + 18,000 \\ &= 0
-\end{aligned} $$
-Solving this quadratic equation with the quadratic formula yields the two eigenvalues, $\lambda_1$ and $\lambda_2$ being:
+\begin{aligned}
+\frac{1}{n}\sum_{i=1}^n E(X_i) = \frac{1}{n}\sum_{i=1}^n \mu = \frac{\mu \cdot n}{n} = \mu
+\end{aligned}
+$$
 
-$$\lambda_1 = 150, \lambda_2 = 120$$
+Therefore, we now know that the expection of $\bar{X}_n$ is $\mu$.
 
-| $\lambda_1 = 150$ | $\lambda_2 = 120$ |
-| :----: | :----: |
-| $$\begin{aligned} (S - \lambda_1 I_2) \cdot \vec{v} &= 0 \\ \begin{bmatrix} 144 - 150 & -12 \\ -12 & 126 - 150 \end{bmatrix} &= \begin{bmatrix} -6 & -12 \\ -12 & -24 \end{bmatrix} \\ &\implies \begin{bmatrix} 1 & 2 \\ 0 & 0 \end{bmatrix}\\
-\end{aligned}$$ \ Thus $x_1 + 2x_2 = 0 \implies x_1 = -2x_2$. The eigenvector for $\lambda_1$ is (-2, 1). | $$\begin{aligned} (S - \lambda_2 I_2) \cdot \vec{v} &= 0 \\ \begin{bmatrix} 144 - 120 & -12 \\ -12 & 126 - 120 \end{bmatrix} &= \begin{bmatrix} 24 & -12 \\ -12 & 6 \end{bmatrix} \\ &\implies \begin{bmatrix} 2 & -1 \\ 0 & 0 \end{bmatrix}\\
-\end{aligned}$$ \ Thus $2x_1 - x_2 = 0 \implies x_2 = 2x_1$. The eigenvector for $\lambda_1$ is (1, 2).|
+Now we calculate it's variance in a similar manner:
+
+$$
+\begin{aligned}
+\text{Var}(\bar{X}_n) = \text{Var}\Bigg(\frac{\sum_{i=1}^n X_i}{n}\Bigg) = \frac{1}{n^2}\sum_{i=1}^n \text{Var}(X_i)
+\end{aligned}
+$$
+
+We note that the third equality is valid because since the $X_i$ are *independent* as well as identially distributed. This means that any and all covariance terms areo precisely zero. Continuing the calculation, we arrive at:
+
+$$
+\begin{aligned}
+\frac{1}{n^2}\sum_{i=1}^n \text{Var}(X_i) = \frac{1}{n^2}\sum_{i=1}^n \sigma^2 = \frac{\sigma^2 \cdot n}{n^2} = \frac{\sigma^2}{n}
+\end{aligned}
+$$
+
+With this result, we can finally conclude that $\color{red}\boxed{\color{black} \bar{X}_n \sim N(\mu, \frac{\sigma^2}{n})}$.
+
+# Part (b)
+The general structure of a confidence interval is following:
+
+$$
+\begin{aligned}
+(\text{point estimate } \pm \text{ critical value } \cdot \text{ standard deviation/error})
+\end{aligned}
+$$
+
+We are specifically deriving a 95% confidence interval for the sampling distribution of $\bar{X}_n$ which we now know is $N(\mu, \frac{\sigma^2}{n})$.
+
+The first thing we recognize is that $\mu$ is the parameter, whose location we are trying to ascertain with the estimate $\bar{X}_n$, for a given sample of size $n$. Thus, the point estimate for $\mu$ is $\bar{X}_n$.
+
+Secondly, we must determine the critical value. This is dependent on the sampling distribution which is $N(\mu, \frac{\sigma^2}{n})$. Since we know not only our distribution is Normal but the population variance too, our a critical value is a z-score with form:
+
+$$
+z_{\text{crit}} = \frac{\bar{x}_n - \mu}{\sigma/\sqrt{n}}
+$$
+
+This expression follows a standard Normal distribution $N(0,1)$.
+
+The standard error is easy to find as it is simply $\frac{\sigma}{\sqrt{n}}$.
+
+Starting at the requirement that for a 95% confidence interval, the following must be true:
+
+$$
+P(-1.96 < \frac{\bar{x}_n - \mu}{\sigma/\sqrt{n}} < 1.96) = 0.95
+$$
+
+To arrive at our desired confidence interval, we make take the inequality inside the probability operation and solve for $\mu$:
+
+$$
+\begin{aligned}
+-1.96 < &\frac{\bar{x}_n - \mu}{\sigma/\sqrt{n}} < 1.96 \\
+-1.96 \cdot \frac{\sigma}{\sqrt{n}} < & \bar{x}_n - \mu < 1.96 \cdot \frac{\sigma}{\sqrt{n}} \\
+-\bar{x}_n - 1.96 \cdot \frac{\sigma}{\sqrt{n}} < &- \mu < -\bar{x}_n + 1.96 \cdot \frac{\sigma}{\sqrt{n}} \\
+\bar{x}_n - 1.96 \cdot \frac{\sigma}{\sqrt{n}} < & \mu < \bar{x}_n + 1.96 \cdot \frac{\sigma}{\sqrt{n}}
+\end{aligned}
+$$
+
+Therefore:
+
+$$
+P\Big(\bar{X}_n - 1.96 \cdot \frac{\sigma}{\sqrt{n}} < \mu < \bar{x}_n + 1.96 \cdot \frac{\sigma}{\sqrt{n}}\Big) = 0.95
+$$
+
+# Part (c)
+We now assume that there is another I.I.D. sample $X_{n+1}, \dots, X_{2n}$ of size $n$, that is also independent of the first sample, and is from another Normal distribution $N(\mu, \tau^2)$. (We also assume that $\tau^2$ does **NOT** refer to the precision, but instead the variance of the second sample.)
+
+Immediately, we can conclude that the sampling distribution of $\bar{X}_{2n}$ is yet another Normal distribution.
