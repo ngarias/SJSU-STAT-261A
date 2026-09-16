@@ -94,10 +94,24 @@ $$
 Therefore:
 
 $$
-P\Big(\bar{X}_n - 1.96 \cdot \frac{\sigma}{\sqrt{n}} < \mu < \bar{x}_n + 1.96 \cdot \frac{\sigma}{\sqrt{n}}\Big) = 0.95
+\color{red}\boxed{\color{black}P\Big(\bar{X}_n - 1.96 \cdot \frac{\sigma}{\sqrt{n}} < \mu < \bar{x}_n + 1.96 \cdot \frac{\sigma}{\sqrt{n}}\Big) = 0.95}
 $$
 
 # Part (c)
 We now assume that there is another I.I.D. sample $X_{n+1}, \dots, X_{2n}$ of size $n$, that is also independent of the first sample, and is from another Normal distribution $N(\mu, \tau^2)$. (We also assume that $\tau^2$ does **NOT** refer to the precision, but instead the variance of the second sample.)
 
-Immediately, we can conclude that the sampling distribution of $\bar{X}_{2n}$ is yet another Normal distribution.
+Immediately, we can conclude that the sampling distribution of $\bar{X}_{2n}$ is yet another Normal distribution. Now, we must find the expectation and variance parameters, as before.
+
+The expectation is straightforward after the following realization: when we calculated the expectation of the sample average, the sample size appeared in the numerator and the denominator of the fraction, which meant that it was cancelled out. This means that the expectation of this new statistic $\bar{X}_{2n}$ is also $\mu$. So will any other statistic that involved taking the average of $k$ number of variables.
+
+The variance is best found by calculating it directly:
+
+$$
+\begin{aligned}
+\text{Var}(\bar{X}_{2n}) = \text{Var}\Bigg(\frac{\sum_{i=1}^{2n} X_i}{2n} \Bigg) = \frac{1}{4n^2}\sum_{i=1}^{2n} \text{Var}(X_i) = \frac{1}{4n^2}\sum_{i=1}^{2n} \sigma^2 = \frac{\sigma^2 \cdot 2n}{4n^2} = \frac{\sigma^2}{2n}
+\end{aligned}
+$$
+
+Notice that the expression found for $\text{Var}(\bar{X}_{2n})$ is the exact same as $\text{Var}(\bar{X}_{n})$ except that we replace $n$ by $2n$. This is intuitive since all we did was double the sample size.
+
+Therefore, to conclude $\color{red}\boxed{\color{black}\bar{X}_{2n} \sim N(\mu, \frac{\sigma^2}{2n})}$
