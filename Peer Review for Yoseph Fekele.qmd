@@ -1,0 +1,64 @@
+---
+title: "Peer Review for Yoseph Feleke - MATH 261A"
+author: "Noah Arias"
+format:
+    pdf:
+        include-in-header:
+        - text: |
+            \usepackage{amsmath}
+            \usepackage{tcolorbox}
+---
+1. *What is the main research question of this paper?*
+
+Yoseph's research paper focuses whether the number of progressive carries (significantly carring the ball towards the opponent's goal) can predict the number of shots on the opponent's goal that were made during the 2024-2025 English Premier League season, as well as if that prediction can be modeled via a linear relationship.
+
+The person who progresses the ball is not always the one who scores. It's conceivable that progressive ball movement helps, in that it gets the ball closer to the opponent's goal, or hinders, in that aggressive forward movement prevents the rest of the team from getting into a position to score.
+
+2. *Briefly describe the dataset used to explore the main research question. Is the data adequately introduced and described? Are there any limitations or caveats that the
+author should address?*
+
+Yoseph's analysis was based upon player-level data from the 2024-2025 English Premier League. That data can be found on the [SCORE Sports Data Repository](https://data.scorenetwork.org/soccer/epl-player-stats-2425.html).
+
+I do believe that the data was adequately introduced and described. Yoseph described what the data is, where it can be found, and why it is important. He presents the data very clearly, using a table for progressive carries and shots comparissons and a scatterplot with the least squares line. Everything displayed in a neat and tidy manner.
+
+The introduction clearly demonstrates the steps that Yoseph took to produce the results that he found, as well as the rationale underlying each step.
+
+Along with linear regression, I also appreciate the Q-Q and Residual plots as well his commentary justifying the choice to use linear regression.
+
+3. *Describe the regression model used to answer the main research question. Is this model appropriate for the question of interest? Are there any limitations or caveats that the author should address?*
+
+The regression model that Yoseph used was the following:
+
+$$
+Y_{i} = \beta_0 + \beta_1 X_{i} + \epsilon_{i}, \qquad i = 1,2,\dots, n
+$$
+
+Where $Y_{i}$ is the number of shots that a specific player has taken, $\beta_0$ is the expected number of shots when there are no progressive advancements, $\beta_1$ is the expected change in the number of shots with one additional progressive carry, $X_i$ is a given player's number of progressive carries, and $\epsilon_i$ the random error for a given player.
+
+On the plot containing progressive carries on the x-axis and shots on the y-axis, I am noticing that the datapoints that are above the regression line have a wider spread than those below. I don't think that this invalidates linear regression as the tool for this analysis, but it makes me wonder what other tool might better capture that uneven spread of data? Linear regression benefits from the residuals being evenly distributed, and that is not the case here.
+
+4. *What are the most effective components of this paper? Why?*
+
+I think that the most effective components of Yoseph's research paper are the Results and Discussion sections. Explaining the where, what, and why of the data is straightfoward, but the analysis and conclusions is where more meaningful knowledge can be ascertained. I thought Yoseph's writing in both sections was very good. He clearly explains the statistical analyses used and what they do and don't support. Yoseph lists out the direct formula for the regression line, confidence intervals for the slope of the regression line, the details of the hypothesis test, and the $\text{R}^2$ value, but also provides the context behind what all of these statistics mean regaarding his data.
+
+The same thing can be said for his Discussion section. Yoseph reiterates the key points from his Results section, and further lays out the practical conclusions that one can make from this study. Yoseph, however, also describes the limitations in his study and suggests where others could improve on his work.
+
+5. *Are there any sections that the author should focus on revising? Does anything seem
+out of order or incompletely explained?*
+
+I don't believe that Yoseph's paper has any major faults that need major revising. I also don't believe that there is something that is out of order or incompletely explained. Given the choice of a linear regression, Yoseph has done an excellent job extracting all the relevant information for the readers.
+
+Yoseph has already acknowledged that the regression assumptions are not fully met and discussed how this weakens his conclusions.
+
+6. *Review the rubric for Paper 1. Are there any requirements that have not been met? If so,
+identify them here.*
+
+All Paper 1 requirements appear to be fulfilled.
+
+7. *Do you have any other suggestions or comments for the author? Provide them here.*
+
+Yoseph's conclusions is that there is a weak but positive association between progressive carries and shots, is interesting, but something that he should consider is a multiple regression with other predictors such as minutes played.
+
+Something else that is worthy of investigation is if the association improves once more stand-out or influential players are removed from the analysis. Then the question scope changes to asking whether or the "typical" or "median" players exhibit strong relationships between progressive carries and the number of shots on goal.
+
+I think Yoseph could consider using color for certain key ideas. This is solely for improving readability. Another suggestion is the use of photos to help demonstrate to the reader the layout of certain positions in football where his research paper is relevant.

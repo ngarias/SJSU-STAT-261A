@@ -1,0 +1,278 @@
+---
+title: "Homework #1"
+author: "Noah Arias"
+date: 09-02-2026
+format:
+    pdf:
+        fontsize: 14pt
+---
+```{r}
+#| label: load-packages
+#| include: false
+
+library(tidyverse)
+library(rosdata)
+```
+## Problem 1
+### Part (a)
+
+Since $Y = 2X + \epsilon$ where $\epsilon ~ N(0, \sigma^2)$, then:
+
+$E(Y) = E(2X + \epsilon) = 2 \cdot E(X) + E(\epsilon) = 2 \cdot \sum_{i = 1}^6 x \cdot p_{X}(x) + 0$
+
+Evaluating the sum, we get: $\sum_{i = 1}^6 x \cdot p_{X}(x) = 1\cdot \frac{1}{36} + 2\cdot \frac{3}{36} + 3\cdot \frac{5}{36} + 4 \cdot \frac{7}{36} + 5 \cdot \frac{9}{36} + 6 \cdot \frac{11}{36} = \frac{161}{36}$
+
+Combining, we conclude with:
+$E(Y) = 2 \cdot \frac{161}{36} = \frac{161}{18} \approxeq 8.94$
+
+### Part (b)
+
+Now, we fix the random variable, $X$, at the outcome of 2, and then calculate the mean of $Y$ given $X = 2$:
+
+$E(Y | X = 2) = E(2 \cdot 2 + \epsilon) = 4 + 0 = 4$
+
+### Part (c)
+Starting off, we find the probaility of $X$ being less than or equal to $2$.
+
+$P(X \leq 2) = P(X=1) + P(X=2) = \frac{1}{36} + \frac{3}{36} = \frac{4}{36}$
+
+### Part (d)
+
+$Var(Y | X = 2) = Var(2(2) + \epsilon) = Var(\epsilon) = \sigma^2$
+
+### Part (e)
+
+$Var(Y) = Var(2X + \epsilon) = 4Var(X) + \sigma^2$
+
+The variance of $X$ can be found via: $Var(X) = E(X)^2 - E(X^2)$. Thus:
+
+$Var(X) =$
+
+{{< pagebreak >}}
+
+## Problem 2
+We begin by stating that for a simple linear regression with model:
+
+$Y_i = \beta_0 + \beta_1 \cdot X_i + \epsilon$
+
+Our goal is to find the valutes of $\beta_0$ and $\beta_1$ that minimizes the sum of the squared deviations, that is:
+
+$Q = \sum_{i = 1}^n (Y_i - \beta_0 + \beta_1 \cdot X_i)^2$
+
+Treating $\beta_0$ and $\beta_1$ as variables with which we differentiate with respect to, we arrive at the following two differential equations:
+
+\begin{center}
+$\frac{\partial Q}{\partial \beta_0} = -2\sum_{i = 1}^n (Y_i - \beta_0 - \beta_1 \cdot X_i)$
+
+$\frac{\partial Q}{\partial \beta_1} = -2\sum_{i = 1}^n X_i(Y_i - \beta_0 - \beta_1 \cdot X_i)$
+\end{center}
+
+To find the minimizing value, we set these equations equal to zero and solve for our estimators of $\beta_0$ and $\beta_1$ respectively, $b_0$ and $b_1$ are:
+
+\begin{center}
+$-2\sum_{i = 1}^n (Y_i - b_0 - b_1 \cdot X_i) = 0$
+
+$-2\sum_{i = 1}^n X_i(Y_i - b_0 - b_1 \cdot X_i) = 0$
+\end{center}
+
+We can rearrange both equations to arrive at:
+
+\begin{center}
+$\sum_{i=1}^n Y_i = n b_0 - b_1 \sum_{i=1}^n X_i$
+
+$\sum_{i=1}^n X_i Y_i = b_0 \sum_{i=1}^n X_i - b_1 \sum_{i=1}^n X^2_i$
+\end{center}
+
+\begin{center}
+$b_1 = \frac{\sum_{i = 1}^n X_iY_i - b_0 \cdot \sum_{i=1}^n X_i}{\sum_{i = 1}^n X^2_i}$
+\end{center}
+
+This is a system of two linear (in terms of the parameters/estimators) equations with two unknowns. This means that if there is a solution, then it is unique.
+
+We shall solve this system via substitution, choosing to rewrite the first equation in terms of $b_0$, rearranging, and substituting for $b_0$ in the second equation as follows:
+
+\begin{center}
+$b_0 = \frac{\sum_{i = 1}^n Y_i - b_1 \sum_{i=1}^n X_i}{n}$
+\end{center}
+
+In the process, however, we notice that if we distribute the $n$ in the denominator to both sums, we actually arrive at the first ordinary least square estimator equation for $b_0$:
+
+\begin{center}
+$b_0 = \bar{Y} - b_1 \bar{X}$
+\end{center}
+
+We will use this equation to substitute for $b_0$ for the second equation and arrive at:
+
+\begin{center}
+$b_1 = \frac{\sum_{i = 1}^n X_iY_i - (\bar{Y} - b_1 \bar{X}) \cdot \sum_{i=1}^n X_i}{\sum_{i = 1}^n X^2_i}$
+\end{center}
+
+\begin{center}
+$b_1 = \frac{\sum_{i = 1}^n X_iY_i - \bar{Y} \cdot \sum_{i=1}^n X_i - b_1 \bar{X} \cdot \sum_{i=1}^n X_i}{\sum_{i = 1}^n X^2_i}$
+\end{center}
+
+\begin{center}
+$b_1 \cdot \sum_{i = 1}^n X^2_i = \sum_{i = 1}^n X_iY_i - \bar{Y} \cdot \sum_{i=1}^n X_i + b_1 \bar{X} \cdot \sum_{i=1}^n X_i$
+\end{center}
+
+\begin{center}
+$b_1 \cdot \sum_{i = 1}^n X^2_i - b_1 \bar{X} \cdot \sum_{i=1}^n X_i = \sum_{i = 1}^n X_iY_i - \bar{Y} \cdot \sum_{i=1}^n X_i$
+\end{center}
+
+Factoring out the $b_1$ from the left hand side and then dividing both sides by the remainder results in:
+
+\begin{center}
+$b_1 = \frac{\sum_{i = 1}^n X_iY_i - \bar{Y} \cdot \sum_{i=1}^n X_i}{\sum_{i = 1}^n X^2_i - \bar{X} \cdot \sum_{i=1}^n X_i}$
+\end{center}
+
+{{< pagebreak >}}
+
+## Problem 3
+### Part (a)
+I imagine for a moment, that rather the equation being $Y_i = X_i + \epsilon_i$, it was instead $Y_i = X_i$. This simply states that the outcome is exactly the same as the predictor, which has the exact same algebraic structure as the diagonal line $y(x) = x$.
+
+Since I know that the slope of the line is given by the change in y-values divided by the change in x-values, and for the line the slope and intercepts are $1$ and $0$ respectively, I also expect that the slope and intercept and of the regresssion line should be approximately $1$ and $0$, respectively as well. I emphasize approximately because there are two sources of uncertainty. Firstly, that $X_i ~ N(0,1)$. Secondly, $Y_i$ as defined contains another error ter, $\epsilon_i$, which is also distributed standard normally.
+
+
+```{r}
+set.seed(385)
+n <- 100
+x <- rnorm(n)
+epsilon <- rnorm(n)
+y <- x + epsilon
+
+regression_line <- lm(y ~ x)
+plot(x, y, main = paste("Regression Line: Y = ",
+round(coef(regression_line)[2], 3), 
+"X", round(coef(regression_line)[1], 3)))
+
+abline(coef(regression_line)[1], coef(regression_line)[2])
+```
+
+### Part (b)
+Using a similar analysis as in part (a), to have a linear regression where now the $X_i$ are the outcomes with $Y_i$ playing the role of the predictor, means that we are inverting the original equation. As such, we can expect the intercept to stay the same and the slope to have the same magnitude, but with a sign change.
+
+
+```{r}
+set.seed(385)
+n <- 100
+x <- rnorm(n)
+epsilon <- rnorm(n)
+y <- x + epsilon
+
+regression_line <- lm(x ~ y)
+
+plot(y, x, main = paste0("Regression Line: X = ", 
+round(coef(regression_line)[2], 3), 
+" Y + ", round(coef(regression_line)[1], 3)))
+abline(regression_line)
+```
+
+### Part (c)
+For the first plot, I got a graph that is exactly what I expected. For the second graph, however, I did not expect for the reverse regression to plot a line that is still pointing in the same general direction, albeit with a decreased slope. It appears that the slope in the second graph is about half that of the first graph. I'm not sure why the reverse regression still has a positive slope. I was so sure that it would be negative.
+
+{{< pagebreak >}}
+
+## Problem 4
+
+I don't see why the outcome variable must be normal for a least squares method to be fully valid. Nothing in the theory requries for either predictor or outcome variable to be normal. The only thing that is explicitly called out to be distributed normally are the error terms.
+
+It is conceptually possible that while the underlying distributions may not be normal, most of the probability mass is distributed in such a way so that the realizations line up "well enough" for a regression line to still apply.
+
+An example that comes to mind, is if we regressed on variables that were distributed via a Student's t distribution with a sufficiently high degree of freedom. With a degree of freedom large enough, we can make the t-distribution arbitrarily close to a normal distribution. The data sampled from the distribution would look very similar to normal and would be "close enough" for a regression to still work and be valid. An example is provided below:
+
+```{r}
+set.seed(385)
+n <- 100
+x <- rt(n, df = 100)
+epsilon <- rnorm(n)
+y <- x + epsilon
+
+regression_line <- lm(x ~ y)
+
+plot(y, x, main = paste0("Regression Line: X = ", 
+    round(coef(regression_line)[2], 3), " Y + ", 
+    round(coef(regression_line)[1], 3)))
+abline(regression_line)
+```
+
+{{< pagebreak >}}
+
+## Problem 5
+
+I think the major flaw with the argument occurs in the last sentence: "You find no **correlation** at all and conclude that, contrary to both theories, there is **no connection** between domestic instability and war."
+
+It looks like the authors of this paper made the mistake of concluding that a lack of correlation directly implies ther being no connection between domestic instability and war. To make the conclusion hold, they would've needed to control for all other factors apart from domestic instability, and see how varying domestic instability changes the posture of a country's foreign policy.
+
+Since this claim comes from an observational study, the authors would've needed to block for or control for countries with different characteristics so that the claim can be causative instead of correlative.
+
+{{< pagebreak >}}
+
+## Problem 6
+### Part (a)
+```{r, warning = FALSE, message = FALSE}
+data(health)
+
+ggplot(health, aes(x = spending, y = lifespan)) +
+  geom_point(color = "orange", size = 2) +
+  geom_text(aes(label = country), vjust = -1.0) + 
+  labs(title = "Health Care Expenditures versus Lifespan", 
+  x = "Health Care Expenditures (in US Dollars)", y = "Lifespan") +
+  geom_smooth(method = "lm", se = FALSE, color = "red")
+
+summary(lm(health$lifespan ~ health$spending))
+
+```
+
+### Part (b)
+I observe that, on average, as a country increases its healthcare expenditures, its lifespan increases. The United States of America is a noticeable outlier to this trend. This plot is only showing a trend and not any of the underlying reasons or causes for **how** money is spent on healthcare and **who** is it mainly going to.
+
+### Part (c)
+Fitting a simple linear regression, I see that the estimated slope and intercept are $76.04$ and $0.001038$ respectively. The slope parameter has the interpretation that, on average, for every dollar increase that a country spends on health care, the average lifespan goes up by $0.001038$ years.
+
+### Part (d)
+Removing the United States from the data set and rerunning the analysis results in the following:
+```{r, warning = FALSE, message = FALSE}
+data(health)
+except_US <- subset(health, country != "USA")
+
+ggplot(except_US, aes(x = spending, y = lifespan)) +
+  geom_point(color = "orange", size = 2) +
+  geom_text(aes(label = country), vjust = -1.0) + 
+  labs(title = "Health Care Expenditures versus Lifespan", 
+  x = "Health Care Expenditures (in US Dollars)", y = "Lifespan") +
+  geom_smooth(method = "lm", se = FALSE, color = "red")
+
+summary(lm(except_US$lifespan ~ except_US$spending))
+```
+
+The model parameters did not change by as much as I would have thought. The slope parameters has the same basic interpretation as before, but now the numbers have slightly changed. With this modified dataset, the new slope interpretation becomes:
+
+On average, for every dollar increase that a country (that is not the United States of America) spends on health care, the average lifespan goes up by $0.001763$ years.
+{{< pagebreak >}}
+
+## Problem 7
+```{r}
+movies <- read.csv("https://ericwfox.github.io/data/movies.csv")
+
+plot(x = na.omit(movies$critics_score), 
+y = na.omit(movies$audience_score), 
+xlab = "Critics Score", ylab = "Audience Score", 
+main = "Critics Score vs Audience Score")
+
+least_square_line = lm(na.omit(movies$audience_score) ~ 
+    na.omit(movies$critics_score))
+
+abline(least_square_line, col = "red")
+```
+
+### Part (a)
+I have downloaded the dataset about movie off of iMDB which, importantly, has numerical data ont the critical score and the audience score of a given movie.
+
+I have fitted a regression line between the critical score and the audience score to see if there was any pattern or relationship between the two scores. As such, there appears to be a postive, linear association between the audience and movie critics.
+
+### Part (b)
+It would be interesting to break down movies by genre category (horror, thriller, action, comedy, etc) and see if there are any major divergences between the audience and the critics.
+
+### Part (c)
+Using the first model, I could predict the audience score based off the critical score of a given movie. And vice versa: flipping which score is the predicted and the observed variable, I could predict the critical score based off the mood of the audience.

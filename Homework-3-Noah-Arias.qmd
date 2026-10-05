@@ -1,0 +1,150 @@
+---
+title: "Homework #3 - MATH 261A"
+author: "Noah Arias"
+format:
+    pdf:
+        code-overflow: wrap
+        include-in-header:
+        - text: |
+            \usepackage{amsmath}
+            \usepackage{tcolorbox}
+---
+
+```{r}
+#| warning: false
+#| error: false
+#| echo: false
+
+library(tidyverse)
+library(tidytuesdayR)
+
+starbucks_data <- read_csv("C:/Users/noaha/Documents/GitHub/SJSU-STAT-261A/starbucks.csv")
+longbeach <- tidytuesdayR::tt_load(2025, week = 9)
+```
+
+# Problem 1
+
+For an estimator to be unbiased, this means that the expectation of the estimator is equal to the parameter:
+
+$$
+E(\vec{\textbf{b}}) = \vec{\symbf{\beta}}
+$$
+
+The least squares estimator for the coefficients, $\vec{\textbf{b}}$, is equal to the following:
+
+$$
+\vec{\textbf{b}} = (\textbf{X}^\top\textbf{X})^{-1}\textbf{X}^\top\textbf{Y}
+$$
+
+If we substitute the formula for linear regression model in for $\textbf{Y} = \textbf{X}\vec{\symbf{\beta}} + \vec{\symbf{\epsilon}}$ and simplify, we get:
+
+$$
+\begin{aligned}
+\vec{\textbf{b}} &= (\textbf{X}^\top\textbf{X})^{-1}\textbf{X}^\top\textbf{Y} \\ &= (\textbf{X}^\top\textbf{X})^{-1}\textbf{X}^\top(\textbf{X}\vec{\symbf{\beta}} + \vec{\symbf{\epsilon}})\\ &= (\textbf{X}^\top\textbf{X})^{-1}\Big[\textbf{X}^\top\textbf{X}\vec{\symbf{\beta}} + \textbf{X}^\top\vec{\symbf{\epsilon}}\Big]\\ &= (\textbf{X}^\top\textbf{X})^{-1}\textbf{X}^\top\textbf{X}\vec{\symbf{\beta}} + (\textbf{X}^\top\textbf{X})^{-1}\textbf{X}^\top\vec{\symbf{\epsilon}}\\ &= \vec{\symbf{\beta}} + (\textbf{X}^\top\textbf{X})^{-1}\textbf{X}^\top\vec{\symbf{\epsilon}}
+\end{aligned}
+$$
+
+Now if we apply the expectation operation, conditional on the data, $\textbf{X}$, we get:
+
+$$
+\begin{aligned}
+E(\vec{\textbf{b}}) &= E(\vec{\symbf{\beta}} + (\textbf{X}^\top\textbf{X})^{-1}\textbf{X}^\top\vec{\symbf{\epsilon}})\\ &= E(\vec{\symbf{\beta}}) + E((\textbf{X}^\top\textbf{X})^{-1}\textbf{X}^\top\vec{\symbf{\epsilon}})\\ &= \vec{\symbf{\beta}} + (\textbf{X}^\top\textbf{X})^{-1}\textbf{X}^\top \cdot E(\vec{\symbf{\epsilon}})\\ &= \vec{\symbf{\beta}} + (\textbf{X}^\top\textbf{X})^{-1}\textbf{X}^\top \cdot \vec{\mathbf{0}}\\ &= \vec{\symbf{\beta}}
+\end{aligned}
+$$
+
+Therefore, we have shown that $\color{red}\boxed{\color{black}\text{our least squares estimator is unbiased}}$ if the model's assumptions are satisfied.
+
+# Problem 2
+
+## Part (a)
+
+## Part (b)
+
+
+# Problem 3
+
+
+
+# Problem 4
+
+## Part (a)
+
+```{r}
+#| warning: false
+#| error: false 
+
+ggplot(starbucks_data, aes(x = carb, y = calories)) +
+    geom_point(alpha = 0.3) +
+    labs(x = "Carbohydrate Content (in grams)",
+        y = "Energy Content (in kilocalories)",
+        title = "Carbohydrate Content versus Energy Content
+        of Starbucks Menu in 2011") +
+    geom_smooth(method = "lm", se = TRUE)
+
+summary(lm(calories ~ carb, data = starbucks_data))
+```
+
+The estimated slope parameter is 4.2971 kilocalories per gram of carbohydrates. The interpretation of the slope parameter is:
+
+$\color{red}\boxed{\color{black}\text{for every gram increase of carbohydrates of a menu item, on average,}}$
+
+$\color{red}\boxed{\color{black}\text{the energy content increases by 4.2971 kilocalories.}}$
+
+## Part (b)
+
+```{r}
+#| warning: false
+#| error: false 
+summary(lm(calories ~ fat + carb + fiber + protein, data = starbucks_data))
+```
+
+The estimated slope parameter for `carb` is $\color{red}\boxed{\color{black}3.84206}$. I would interpret the parameter as saying that for every gram increase of carbohydrates of a menu item, on average, the energy content increases by 3.84206 kilocalories assuming we hold the other factors (fat, fiber, and protein) constant.
+
+## Part (c)
+
+I think that the estimator provided in part (b) is better. The model incorporates more treatment variables, and since it is highly likely that `fat`, `fiber`, and `protein` are correlated with `carbs`, then they should have an effect on the net calories that a person gains from `carbs`. The body has to expend extra energy digesting a piece of food that is composed of multiple different macronutrients instead of just one. That extra energy decreases the net amount of energy that the body can extract from food, which lines up with the `carb` estimate being smaller.
+
+# Problem 5
+
+## Parts (a) and (b)
+
+```{r}
+longbeach_clean <- longbeach$longbeach
+
+longbeach_relevant <- longbeach_clean %>%
+    filter(animal_type == "dog", intake_condition == "normal", outcome_type == 
+    "adoption") %>%
+    mutate(time_to_adoption = as.numeric(outcome_date - intake_date), age = 
+    as.numeric(intake_date - dob))
+
+sum(longbeach_relevant$age < 0, na.rm = TRUE)
+
+ggplot(data = longbeach_relevant, aes(x = age, y = time_to_adoption)) +
+    geom_point(alpha = 0.3) +
+    labs(x = "Age of Dog (in Days)",
+        y = "Time to Adoption (in Days)",
+        title = "Dog age on intake versus time to adoption") +
+    geom_smooth(method = "lm", se = TRUE)
+
+summary(longbeach_relevant)
+regression <- lm(time_to_adoption ~ age, data = longbeach_relevant)
+plot(regression, which = 1)
+plot(regression, which = 2)
+summary(regression)
+```
+
+There is some odd structure associated with this data. For one, there are two dogs that have a negative age. This does not provide confidence with the quality of the data. Secondly, we can see on the plot that there are regularly spaces spikes that are roughly 365 days spread apart. This suggests that when a new dog comes into the shelter, unless they happen to know precisely the date of birth of the dog, they must *approximate* the age. The highest resolution level that a staff member could reasonable guess is the number of years. This makes the dog have an age that is a clean, easy number.
+
+Regarding the linear regression, the estimated slope parameter is 0.005569 adoption days per age days. This means that, on average, for every day that the dog increases in age, the time it takes for the dog to be adopted increases by 0.005569 days.
+
+## Part (c)
+When looking at both the Q-Q plot and the Residuals vs Fitted Plot, they do **not** suggest normality.
+
+Tackling each assumption turn by turn, its safe to assume that the errors are **not** independent **nor** do they have mean zero. If they did, then we would see roughly equal amounts of data appear above and below the regression line. This is clearly not the case for our data.
+
+The variance of the errors are likely finite, but as was previously mentioned, the data is **not** evenly spread above and below the regression line. The data is *much* more spread out or diffuse above the regresion line than it is below it.
+
+Combining the two previous observations, it is safe to say that the errors are **not** normally distributed.
+
+## Part (d)
+No, I would say that this is not a good model to use.
